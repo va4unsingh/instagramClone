@@ -49,14 +49,27 @@ function Middle() {
         <div className="mt-1">
           <img src={Card} className="rounded-sm" alt="" />
         </div>
-        <footer>
-          <div className="flex gap-5 mt-5">
-            <img src={Notifications} className="w-[20px]" />
-            <img src={CommentLogo} className="w-[20px]" />
-            <img src={Messages} className="w-[20px]" />
+        <footer className="mt-5">
+          <div className="flex justify-between items-center">
+            <div className="flex gap-5">
+              <img
+                src={Notifications}
+                className="w-[20px]"
+                alt="Notifications"
+              />
+              <img src={CommentLogo} className="w-[20px]" alt="Comments" />
+              <img src={Messages} className="w-[20px]" alt="Messages" />
+            </div>
+            <img src={Bookmark} className="w-[15px]" alt="Bookmark" />
           </div>
-          <img src={Bookmark} alt="" />
-          <div className="mt-2">1,239 Likes</div>
+          <div className="mt-3 font-semibold">1,239 likes</div>
+          <div className="mt-2">positivitykaizen</div>
+          <div className="mt-1 text-white/50">View all 19 comments</div>
+          <input
+            type="text"
+            className="pb-2 w-full mt-3 outline-none border-b border-white/30"
+            placeholder="Add a comment..."
+          />
         </footer>
       </div>
     </div>
