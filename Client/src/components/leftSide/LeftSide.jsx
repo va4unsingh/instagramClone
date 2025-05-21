@@ -17,7 +17,7 @@ import {
 
 function LeftSide() {
   return (
-    <div className="">
+    <div className="fixed">
       <div className="mt-8">
         <img src={NewLogo} width="100px" alt="Instagram" />
       </div>

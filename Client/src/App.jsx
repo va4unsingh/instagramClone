@@ -1,5 +1,5 @@
 import "./App.css";
-import { LeftSide, RightSide } from "./components";
+import { LeftSide, Middle, RightSide } from "./components";
 
 function App() {
   return (
@@ -10,8 +10,8 @@ function App() {
       </div>
 
       {/* Center - 60% */}
-      <div className="w-[54%]  border-r-1 border-white/15 p-2">
-        Center Content
+      <div className="w-[54%]  border-r-1 border-white/15 p-4">
+        <Middle />
       </div>
 
       {/* Right side - 20% */}

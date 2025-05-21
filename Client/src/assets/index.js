@@ -11,6 +11,10 @@ import MetaAi from "./MetaAi.svg";
 import Threads from "./Threads.svg";
 import AIStudio from "./AIStudio.svg";
 import NewLogo from "./NewLogo.png";
+import ellipsis from "./ellipsis.svg";
+import Card from "./Card.jpg";
+import CommentLogo from "./CommentLogo.svg";
+import Bookmark from "./Bookmark.svg";
 
 export {
   InstaLogo,
@@ -26,4 +30,8 @@ export {
   Threads,
   AIStudio,
   NewLogo,
+  ellipsis,
+  Card,
+  CommentLogo,
+  Bookmark,
 };
