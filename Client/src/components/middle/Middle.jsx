@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import EmojiPicker from "emoji-picker-react";
+
 import {
   Profile,
   ellipsis,
@@ -8,6 +9,7 @@ import {
   Messages,
   CommentLogo,
   Bookmark,
+  EmojiIcon,
 } from "../../assets";
 
 function Middle() {
@@ -16,6 +18,26 @@ function Middle() {
     name: "Varun",
     imgSrc: Profile,
   });
+
+  const [showPicker, setShowPicker] = useState(false);
+  const [comment, setComment] = useState("");
+
+  const handleEmojiClick = (emojiData) => {
+    setComment((prev) => prev + emojiData.emoji);
+  };
+  const emojiRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (emojiRef.current && !emojiRef.current.contains(event.target)) {
+        setShowPicker(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="px-20 mt-3 ">
@@ -66,11 +88,40 @@ function Middle() {
           <div className="mt-3 font-semibold">1,239 likes</div>
           <div className="mt-2">positivitykaizen</div>
           <div className="mt-1 text-white/50">View all 19 comments</div>
-          <input
-            type="text"
-            className="pb-2 w-full mt-3 outline-none border-b border-white/30"
-            placeholder="Add a comment..."
-          />
+          {/* Relative wrapper for input and emoji button */}
+          <div className="relative mt-3" ref={emojiRef}>
+            <input
+              type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Add a comment..."
+              className="pb-2 w-full mt-3 outline-none border-b border-white/30"
+            />
+            <button
+              className="absolute right-2 bottom-1 text-lg cursor-pointer"
+              type="button"
+              onClick={() => setShowPicker((prev) => !prev)}
+            >
+              <img src={EmojiIcon} width="15px" alt="" />
+            </button>
+
+            {showPicker && (
+              <div className="absolute bottom-full mb-2 right-0 z-50">
+                <EmojiPicker
+                  onEmojiClick={handleEmojiClick}
+                  theme="dark"
+                  emojiStyle="apple"
+                  width={300}
+                  height={350}
+                  searchDisabled={false}
+                  skinTonesDisabled={false}
+                  lazyLoadEmojis={true}
+                  autoFocusSearch={false}
+                  previewConfig={{ showPreview: false }}
+                />
+              </div>
+            )}
+          </div>
         </footer>
       </div>
     </div>

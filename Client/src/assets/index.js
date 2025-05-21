@@ -15,6 +15,7 @@ import ellipsis from "./ellipsis.svg";
 import Card from "./Card.jpg";
 import CommentLogo from "./CommentLogo.svg";
 import Bookmark from "./Bookmark.svg";
+import EmojiIcon from "./EmojiIcon.svg";
 
 export {
   InstaLogo,
@@ -34,4 +35,5 @@ export {
   Card,
   CommentLogo,
   Bookmark,
+  EmojiIcon,
 };
