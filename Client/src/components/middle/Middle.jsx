@@ -44,7 +44,7 @@ function Middle() {
       <nav>
         <ul className="flex gap-8">
           {users.map((users, index) => (
-            <li key={index} className="text-xs text-center">
+            <li key={index} className="text-xs cursor-pointer text-center">
               <img
                 src={users.imgSrc}
                 className="rounded-full border-2 border-green-500"
@@ -58,18 +58,27 @@ function Middle() {
       </nav>
       <div className="mt-10 px-18 text-xs">
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 ">
             <img
               src={Profile}
-              className="w-[35px] rounded-full border-2 border-amber-600"
+              className="w-[35px] cursor-pointer rounded-full border-2 border-amber-600"
               alt="Profile"
             />
-            <span>positivitykaizen</span>
-            <span className="text-white/60">• 1d</span>
+            <span className="cursor-pointer hover:opacity-80 transition-opacity duration-20">
+              positivitykaizen
+            </span>
+            <span className="text-white/60 cursor-pointer hover:opacity-80 transition-opacity duration-20">
+              • 1d
+            </span>
           </div>
-          <img src={ellipsis} width="15px" alt="options" />
+          <img
+            src={ellipsis}
+            className="cursor-pointer hover:opacity-60 transition-opacity duration-20"
+            width="15px"
+            alt="options"
+          />
         </div>
-        <div className="mt-1">
+        <div className="mt-1 cursor-pointer">
           <img src={Card} className="rounded-sm" alt="" />
         </div>
         <footer className="mt-5">
@@ -77,17 +86,31 @@ function Middle() {
             <div className="flex gap-5">
               <img
                 src={Notifications}
-                className="w-[20px]"
+                className="w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
                 alt="Notifications"
               />
-              <img src={CommentLogo} className="w-[20px]" alt="Comments" />
-              <img src={Messages} className="w-[20px]" alt="Messages" />
+              <img
+                src={CommentLogo}
+                className="w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
+                alt="Comments"
+              />
+              <img
+                src={Messages}
+                className="w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
+                alt="Messages"
+              />
             </div>
-            <img src={Bookmark} className="w-[15px]" alt="Bookmark" />
+            <img
+              src={Bookmark}
+              className="w-[15px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
+              alt="Bookmark"
+            />
           </div>
-          <div className="mt-3 font-semibold">1,239 likes</div>
-          <div className="mt-2">positivitykaizen</div>
-          <div className="mt-1 text-white/50">View all 19 comments</div>
+          <div className="mt-3 font-semibold cursor-pointer">1,239 likes</div>
+          <div className="mt-2 cursor-pointer">positivitykaizen</div>
+          <div className="mt-1 text-white/50 cursor-pointer">
+            View all 19 comments
+          </div>
           {/* Relative wrapper for input and emoji button */}
           <div className="relative mt-3" ref={emojiRef}>
             <input
@@ -98,7 +121,7 @@ function Middle() {
               className="pb-2 w-full mt-3 outline-none border-b border-white/30"
             />
             <button
-              className="absolute right-2 bottom-1 text-lg cursor-pointer"
+              className="absolute right-2 bottom-1 text-lg cursor-pointer hover:opacity-60 transition-opacity duration-20"
               type="button"
               onClick={() => setShowPicker((prev) => !prev)}
             >
