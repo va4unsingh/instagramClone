@@ -2,4 +2,28 @@ import InstaLogo from "./InstaLogo.png";
 import HomeLogo from "./Home.svg";
 import SearchLogo from "./Search.svg";
 import Explore from "./Explore.svg";
-export { InstaLogo, HomeLogo, SearchLogo, Explore };
+import Reels from "./Reels.svg";
+import Messages from "./Messages.svg";
+import Notifications from "./Notifications.svg";
+import Create from "./Create.svg";
+import Profile from "./Profile.jpg";
+import MetaAi from "./MetaAi.svg";
+import Threads from "./Threads.svg";
+import AIStudio from "./AIStudio.svg";
+import NewLogo from "./NewLogo.png";
+
+export {
+  InstaLogo,
+  HomeLogo,
+  SearchLogo,
+  Explore,
+  Reels,
+  Messages,
+  Notifications,
+  Create,
+  Profile,
+  MetaAi,
+  Threads,
+  AIStudio,
+  NewLogo,
+};
