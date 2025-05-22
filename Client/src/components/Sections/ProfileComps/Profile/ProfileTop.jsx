@@ -46,7 +46,7 @@ function ProfileTop() {
         </div>
         <div className="cursor-pointer ml-5 mt-2 text-sm">New</div>
       </div>
-      <div className="mt-20 px-38 ">
+      <div className="mt-15 px-38 ">
         <div className="border-b-1 border-white/30"></div>
       </div>
     </div>
