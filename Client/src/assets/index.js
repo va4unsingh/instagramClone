@@ -19,6 +19,8 @@ import EmojiIcon from "./EmojiIcon.svg";
 import InstaLogoSmall from "./InstaLogoSmall.svg";
 import GearIcon from "./GearIcon.svg";
 import PlusStory from "./PlusStory.svg";
+import tableCell from "./tableCell.svg";
+import userTag from "./userTag.svg";
 
 export {
   InstaLogo,
@@ -42,4 +44,6 @@ export {
   InstaLogoSmall,
   GearIcon,
   PlusStory,
+  tableCell,
+  userTag,
 };

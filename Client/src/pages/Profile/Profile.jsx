@@ -1,10 +1,13 @@
 import React from "react";
-import { ProfileTop } from "../../components";
+import { ProfileBottom, ProfileTop } from "../../components";
+import { Outlet } from "react-router-dom";
 
 function Profile() {
   return (
     <div>
       <ProfileTop />
+      <ProfileBottom />
+      <Outlet />
     </div>
   );
 }
