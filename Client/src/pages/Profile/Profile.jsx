@@ -1,5 +1,5 @@
 import React from "react";
-import { ProfileBottom, ProfileTop } from "../../components";
+import { ProfileBottom, ProfileFooter, ProfileTop } from "../../components";
 import { Outlet } from "react-router-dom";
 
 function Profile() {
@@ -8,6 +8,7 @@ function Profile() {
       <ProfileTop />
       <ProfileBottom />
       <Outlet />
+      <ProfileFooter />
     </div>
   );
 }

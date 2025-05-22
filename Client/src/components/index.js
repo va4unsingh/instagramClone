@@ -6,6 +6,7 @@ import ProfileTop from "./Sections/ProfileComps/Profile/ProfileTop";
 import Posts from "./Sections/ProfileComps/Profile/Posts";
 import Saved from "./Sections/ProfileComps/Profile/Saved";
 import Tagged from "./Sections/ProfileComps/Profile/Tagged";
+import ProfileFooter from "./Sections/ProfileComps/Profile/ProfileFooter";
 
 export {
   LeftSide,
@@ -16,4 +17,5 @@ export {
   Posts,
   Saved,
   Tagged,
+  ProfileFooter,
 };
