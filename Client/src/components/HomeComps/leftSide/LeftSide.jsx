@@ -16,7 +16,7 @@ import {
   NewLogo,
   InstaLogoSmall,
 } from "../../../assets";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 
 function LeftSide() {
   const menuItems = [
@@ -27,17 +27,17 @@ function LeftSide() {
     { label: "Messages", icon: Messages, path: "/inbox" },
     { label: "Notifications", icon: Notifications },
     { label: "Create", icon: Create },
-    { label: "Profile", icon: Profile, isProfile: true },
+    { label: "Profile", icon: Profile, isProfile: true, path: "/profile" },
     { label: "Meta AI", icon: MetaAi },
     { label: "AI Studio", icon: AIStudio },
     { label: "Threads", icon: Threads },
   ];
+
   const location = useLocation();
-  const navigate = useNavigate();
   const isInbox = location.pathname === "/inbox";
 
   return (
-    <div className="fixed ">
+    <div className="fixed">
       <div className="mt-6 p-2 pl-6">
         <img
           className="cursor-pointer"
@@ -46,24 +46,60 @@ function LeftSide() {
           alt="Instagram"
         />
       </div>
-      <ul className={`mt-6 space-y-2  pl-3`}>
-        {menuItems.map((item, index) => (
-          <li
-            onClick={() => item.path && navigate(item.path)}
-            className={`flex gap-x-3 items-center rounded-lg  ${
-              isInbox ? " px-3 pr-4 py-3" : "pr-17 pl-3 py-2.5"
-            } cursor-pointer hover:bg-gray-500/15`}
-            key={index}
-          >
-            <img
-              src={item.icon}
-              className={item.isProfile ? "rounded-full" : ""}
-              width="20px"
-              alt={item.label}
-            />
-            {!isInbox && <span>{item.label}</span>}
-          </li>
-        ))}
+      <ul className={`mt-6 space-y-2 pl-3`}>
+        {menuItems.map((item, index) => {
+          // If item has a path, render as NavLink
+          if (item.path) {
+            return (
+              <li key={index}>
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `flex gap-x-3 items-center rounded-lg cursor-pointer hover:bg-gray-500/15 ${
+                      isInbox ? "px-3 pr-4 py-3" : "pr-17 pl-3 py-2.5"
+                    } ${isActive ? "bg-gray-500/20 font-semibold" : ""}`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <img
+                        src={item.icon}
+                        className={
+                          item.isProfile
+                            ? `rounded-full ${
+                                isActive ? "border-2 border-white" : ""
+                              }`
+                            : ""
+                        }
+                        width="20px"
+                        alt={item.label}
+                      />
+                      {!isInbox && <span>{item.label}</span>}
+                    </>
+                  )}
+                </NavLink>
+              </li>
+            );
+          }
+
+          // For items without paths, render as regular div
+          return (
+            <li
+              className={`flex gap-x-3 items-center rounded-lg ${
+                isInbox ? "px-3 pr-4 py-3" : "pr-17 pl-3 py-2.5"
+              } cursor-pointer hover:bg-gray-500/15`}
+              key={index}
+            >
+              <img
+                src={item.icon}
+                className={item.isProfile ? "rounded-full" : ""}
+                width="20px"
+                alt={item.label}
+              />
+              {!isInbox && <span>{item.label}</span>}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
