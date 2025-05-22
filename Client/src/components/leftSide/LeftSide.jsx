@@ -16,56 +16,44 @@ import {
 } from "../../assets";
 
 function LeftSide() {
+  const menuItems = [
+    { label: "Home", icon: HomeLogo },
+    { label: "Search", icon: SearchLogo },
+    { label: "Explore", icon: Explore },
+    { label: "Reels", icon: Reels },
+    { label: "Messages", icon: Messages },
+    { label: "Notifications", icon: Notifications },
+    { label: "Create", icon: Create },
+    { label: "Profile", icon: Profile, isProfile: true },
+    { label: "Meta AI", icon: MetaAi },
+    { label: "AI Studio", icon: AIStudio },
+    { label: "Threads", icon: Threads },
+  ];
   return (
-    <div className="fixed">
-      <div className="mt-8">
-        <img src={NewLogo} width="100px" alt="Instagram" />
+    <div className="fixed ">
+      <div className="mt-6 p-2 pl-6">
+        <img
+          className="cursor-pointer"
+          src={NewLogo}
+          width="100px"
+          alt="Instagram"
+        />
       </div>
-      <ul className="space-y-7 mt-8">
-        <li className="flex gap-x-3 items-center">
-          <img src={HomeLogo} width="20px" />
-          Home
-        </li>
-        <li className="flex gap-x-3 items-center">
-          <img src={SearchLogo} width="20px" />
-          Search
-        </li>
-        <li className="flex gap-x-3 items-center">
-          <img src={Explore} width="20px" />
-          Explore
-        </li>
-        <li className="flex gap-x-3 items-center">
-          <img src={Reels} width="20px" />
-          Reels
-        </li>
-        <li className="flex gap-x-3 items-center">
-          <img src={Messages} width="20px" />
-          Messages
-        </li>
-        <li className="flex gap-x-3 items-center">
-          <img src={Notifications} width="20px" />
-          Notifications
-        </li>
-        <li className="flex gap-x-3 items-center">
-          <img src={Create} width="20px" />
-          Create
-        </li>
-        <li className="flex gap-x-3 items-center">
-          <img src={Profile} className="rounded-full" width="20px" />
-          Profile
-        </li>
-        <li className="flex gap-x-3 items-center">
-          <img src={MetaAi} width="20px" />
-          Meta AI
-        </li>
-        <li className="flex gap-x-3 items-center">
-          <img src={AIStudio} width="20px" />
-          AI Studio
-        </li>
-        <li className="flex gap-x-3 items-center">
-          <img src={Threads} width="20px" />
-          Threads
-        </li>
+      <ul className="space-y-2 mt-6 pl-3">
+        {menuItems.map((item, index) => (
+          <li
+            className="flex gap-x-3 items-center rounded-lg pr-17 pl-3 py-2.5 cursor-pointer hover:bg-gray-500/15"
+            key={index}
+          >
+            <img
+              src={item.icon}
+              className={item.isProfile ? "rounded-full" : ""}
+              width="20px"
+              alt={item.label}
+            />
+            {item.label}
+          </li>
+        ))}
       </ul>
     </div>
   );

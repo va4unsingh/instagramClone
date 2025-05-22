@@ -10,22 +10,24 @@ import {
   CommentLogo,
   Bookmark,
   EmojiIcon,
+  NewLogo,
+  Create,
 } from "../../assets";
 
 function Middle() {
   // Create an array with 8 items (or more if you want)
-  const users = Array(7).fill({
+  const users = Array(3).fill({
     name: "Varun",
     imgSrc: Profile,
   });
 
   const [showPicker, setShowPicker] = useState(false);
   const [comment, setComment] = useState("");
+  const emojiRef = useRef(null);
 
   const handleEmojiClick = (emojiData) => {
     setComment((prev) => prev + emojiData.emoji);
   };
-  const emojiRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -40,15 +42,22 @@ function Middle() {
   }, []);
 
   return (
-    <div className="px-20 mt-3 ">
+    <div className="xl:px-20">
+      <nav className="fixed top-0 w-full bg-black flex justify-between items-center px-4 py-3 xl:hidden border-b border-white/20 xl:border-none">
+        <img src={NewLogo} className="w-[90px]" />
+        <div className="flex items-center gap-4 ">
+          <img src={Create} className="w-[23px]" />
+          <img src={Notifications} className="w-[23px]" />
+        </div>
+      </nav>
       <nav>
-        <ul className="flex gap-8">
+        <ul className="border-b border-white/20 xl:border-none flex gap-8 px-4 py-2 bg-white/5 xl:bg-transparent pt-15 xl:mt-0 xl:pt-0">
           {users.map((users, index) => (
             <li key={index} className="text-xs cursor-pointer text-center">
               <img
                 src={users.imgSrc}
                 className="rounded-full border-2 border-green-500"
-                width="100px"
+                width="60px"
                 alt={users.name}
               />
               {users.name}
@@ -56,12 +65,12 @@ function Middle() {
           ))}
         </ul>
       </nav>
-      <div className="mt-10 px-18 text-xs">
-        <div className="flex justify-between items-center">
+      <div className="mt-5 xl:px-18 text-lg xl:text-xs">
+        <div className="flex justify-between items-center px-3">
           <div className="flex items-center gap-2 ">
             <img
               src={Profile}
-              className="w-[35px] cursor-pointer rounded-full border-2 border-amber-600"
+              className="w-[45px] cursor-pointer rounded-full border-2 border-amber-600"
               alt="Profile"
             />
             <span className="cursor-pointer hover:opacity-80 transition-opacity duration-20">
@@ -81,22 +90,22 @@ function Middle() {
         <div className="mt-1 cursor-pointer">
           <img src={Card} className="rounded-sm" alt="" />
         </div>
-        <footer className="mt-5">
-          <div className="flex justify-between items-center">
+        <footer className="mt-5 px-4 xl:px-0">
+          <div className="flex justify-between items-center ">
             <div className="flex gap-5">
               <img
                 src={Notifications}
-                className="w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
+                className="w-[22px] xl:w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
                 alt="Notifications"
               />
               <img
                 src={CommentLogo}
-                className="w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
+                className="w-[22px] xl:w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
                 alt="Comments"
               />
               <img
                 src={Messages}
-                className="w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
+                className="w-[22px] xl:w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
                 alt="Messages"
               />
             </div>
@@ -108,11 +117,103 @@ function Middle() {
           </div>
           <div className="mt-3 font-semibold cursor-pointer">1,239 likes</div>
           <div className="mt-2 cursor-pointer">positivitykaizen</div>
-          <div className="mt-1 text-white/50 cursor-pointer">
+          <div className="mt-1 pb-3  text-white/50 cursor-pointer">
             View all 19 comments
           </div>
           {/* Relative wrapper for input and emoji button */}
-          <div className="relative mt-3" ref={emojiRef}>
+             {/* Posts */}
+          <div className="relative mt-3 hidden xl:block" ref={emojiRef}>
+            <input
+              type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Add a comment..."
+              className="pb-2 w-full mt-3 outline-none border-b border-white/30"
+            />
+            <button
+              className="absolute right-2 bottom-1 text-lg cursor-pointer hover:opacity-60 transition-opacity duration-20"
+              type="button"
+              onClick={() => setShowPicker((prev) => !prev)}
+            >
+              <img src={EmojiIcon} width="15px" alt="" />
+            </button>
+
+            {showPicker && (
+              <div className="absolute bottom-full mb-2 right-0 z-50">
+                <EmojiPicker
+                  onEmojiClick={handleEmojiClick}
+                  theme="dark"
+                  emojiStyle="apple"
+                  width={300}
+                  height={350}
+                  searchDisabled={false}
+                  skinTonesDisabled={false}
+                  lazyLoadEmojis={true}
+                  autoFocusSearch={false}
+                  previewConfig={{ showPreview: false }}
+                />
+              </div>
+            )}
+          </div>
+        </footer>
+      </div>
+      <div className="mt-5 xl:px-18 text-lg xl:text-xs">
+        <div className="flex justify-between items-center px-3">
+          <div className="flex items-center gap-2 ">
+            <img
+              src={Profile}
+              className="w-[45px] cursor-pointer rounded-full border-2 border-amber-600"
+              alt="Profile"
+            />
+            <span className="cursor-pointer hover:opacity-80 transition-opacity duration-20">
+              positivitykaizen
+            </span>
+            <span className="text-white/60 cursor-pointer hover:opacity-80 transition-opacity duration-20">
+              • 1d
+            </span>
+          </div>
+          <img
+            src={ellipsis}
+            className="cursor-pointer hover:opacity-60 transition-opacity duration-20"
+            width="15px"
+            alt="options"
+          />
+        </div>
+        <div className="mt-1 cursor-pointer">
+          <img src={Card} className="rounded-sm" alt="" />
+        </div>
+        <footer className="mt-5 px-4 xl:px-0">
+          <div className="flex justify-between items-center ">
+            <div className="flex gap-5">
+              <img
+                src={Notifications}
+                className="w-[22px] xl:w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
+                alt="Notifications"
+              />
+              <img
+                src={CommentLogo}
+                className="w-[22px] xl:w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
+                alt="Comments"
+              />
+              <img
+                src={Messages}
+                className="w-[22px] xl:w-[20px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
+                alt="Messages"
+              />
+            </div>
+            <img
+              src={Bookmark}
+              className="w-[15px] cursor-pointer hover:opacity-60 transition-opacity duration-20"
+              alt="Bookmark"
+            />
+          </div>
+          <div className="mt-3 font-semibold cursor-pointer">1,239 likes</div>
+          <div className="mt-2 cursor-pointer">positivitykaizen</div>
+          <div className="mt-1 pb-3  text-white/50 cursor-pointer">
+            View all 19 comments
+          </div>
+          {/* Relative wrapper for input and emoji button */}
+          <div className="relative mt-3 hidden xl:block" ref={emojiRef}>
             <input
               type="text"
               value={comment}
