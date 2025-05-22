@@ -1,5 +1,5 @@
 import React from "react";
-import { Profile } from "../../assets";
+import { Profile } from "../../../assets";
 
 function RightSide() {
   const footLinks = [

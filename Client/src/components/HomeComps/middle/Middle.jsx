@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import EmojiPicker from "emoji-picker-react";
-import Post from "../Etc/Post";
+import Post from "../../Etc/Post";
 
-import { Profile, Notifications, NewLogo, Create } from "../../assets";
+import { Profile, Notifications, NewLogo, Create } from "../../../assets";
 
 function Middle() {
   // Create an array with 8 items (or more if you want)
