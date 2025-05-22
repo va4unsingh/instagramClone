@@ -17,6 +17,9 @@ import CommentLogo from "./CommentLogo.svg";
 import Bookmark from "./Bookmark.svg";
 import EmojiIcon from "./EmojiIcon.svg";
 import InstaLogoSmall from "./InstaLogoSmall.svg";
+import GearIcon from "./GearIcon.svg";
+import PlusStory from "./PlusStory.svg";
+
 export {
   InstaLogo,
   HomeLogo,
@@ -37,4 +40,6 @@ export {
   Bookmark,
   EmojiIcon,
   InstaLogoSmall,
+  GearIcon,
+  PlusStory,
 };

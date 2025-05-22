@@ -15,7 +15,7 @@ import {
   AIStudio,
   NewLogo,
   InstaLogoSmall,
-} from "../../../assets";
+} from "../../../../assets";
 import { useLocation, NavLink } from "react-router-dom";
 
 function LeftSide() {

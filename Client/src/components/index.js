@@ -1,5 +1,7 @@
-import LeftSide from "./HomeComps/leftSide/LeftSide";
-import Middle from "./HomeComps/middle/Middle";
-import RightSide from "./HomeComps/rightSide/RightSide";
+import LeftSide from "./Sections/HomeComps/leftSide/LeftSide";
+import Middle from "./Sections/HomeComps/middle/Middle";
+import RightSide from "./Sections/HomeComps/rightSide/RightSide";
+import ProfileTop from "./Sections/ProfileComps/Profile/ProfileTop";
 
-export { LeftSide, Middle, RightSide };
+
+export { LeftSide, Middle, RightSide ,ProfileTop};
