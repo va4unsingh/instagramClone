@@ -7,8 +7,8 @@ function InnerDmCombine() {
   return (
     <div>
       <InnerDmHeader />
-      <KeyboardDm />
       <MainDm />
+      <KeyboardDm />
     </div>
   );
 }
