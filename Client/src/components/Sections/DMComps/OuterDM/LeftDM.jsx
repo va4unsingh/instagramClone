@@ -1,6 +1,7 @@
 import React from "react";
 import { PenNotebook, Profile } from "../../../../assets";
 import LowerOuterMsg from "./LowerMsg/LowerOuterMsg";
+import "./scrollBar.css"
 
 function LeftDM() {
   const user = Array(10).fill({
@@ -9,7 +10,7 @@ function LeftDM() {
   });
 
   return (
-    <div className="px-5 py-8 w-[26%] h-full border-r border-white">
+    <div className="px-5 pt-8 w-[26%] h-screen border-r border-white/15 fixed flex flex-col">
       <div className="flex justify-between items-center">
         <div className="text-lg font-bold">vadergotbaddies</div>
         <div>
@@ -29,10 +30,12 @@ function LeftDM() {
         <div className="font-semibold text-white/60">Requests</div>
       </div>
 
-      {/* LowerOuterMsg  */}
-      {user.map((user, index) => (
-        <LowerOuterMsg key={index} user={user} />
-      ))}
+      <div className="overflow-y-auto flex-1 mt-2 -mr-4 custom-scrollbar">
+        {/* LowerOuterMsg  */}
+        {user.map((user, index) => (
+          <LowerOuterMsg key={index} user={user} />
+        ))}
+      </div>
     </div>
   );
 }

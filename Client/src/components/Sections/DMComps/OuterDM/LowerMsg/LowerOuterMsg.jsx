@@ -1,16 +1,16 @@
 import React from "react";
 import { Profile } from "../../../../../assets";
 
-function LowerOuterMsg({user}) {
+function LowerOuterMsg({ user }) {
   return (
     <div>
-      <div className="mt-5 flex items-center">
+      <div className="mt-6 flex items-center">
         <div>
-          <img src={Profile} className="w-[50px] rounded-full" alt="" />
+          <img src={Profile} className="w-[55px] rounded-full" alt="" />
         </div>
         <div className="flex flex-col ml-3 gap-0.5">
-          <div className="text-sm">Varun</div>
-          <div className="text-xs text-white/70">
+          <div className="text">Varun</div>
+          <div className="text-sm text-white/70">
             You send an attachment.<span> • 16h</span>
           </div>
         </div>
