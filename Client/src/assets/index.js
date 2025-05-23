@@ -22,6 +22,7 @@ import PlusStory from "./PlusStory.svg";
 import tableCell from "./tableCell.svg";
 import userTag from "./userTag.svg";
 import cameraIcon from "./cameraIcon.svg";
+import PenNotebook from "./PenNotebook.svg";
 
 export {
   InstaLogo,
@@ -48,4 +49,5 @@ export {
   tableCell,
   userTag,
   cameraIcon,
+  PenNotebook,
 };

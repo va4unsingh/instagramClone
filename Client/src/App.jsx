@@ -3,7 +3,6 @@ import { Inbox, Home, Profile } from "./pages";
 import Layout from "./components/Layout";
 import { Posts, Saved, Tagged } from "./components";
 
-
 function App() {
   return (
     <Router>
