@@ -24,6 +24,8 @@ import userTag from "./userTag.svg";
 import cameraIcon from "./cameraIcon.svg";
 import PenNotebook from "./PenNotebook.svg";
 import MsgOuter from "./MsgOuter.svg";
+import blueTick from "./blueTick.svg";
+import infoI from "./infoI.svg";
 
 export {
   InstaLogo,
@@ -52,4 +54,6 @@ export {
   cameraIcon,
   PenNotebook,
   MsgOuter,
+  blueTick,
+  infoI,
 };

@@ -3,7 +3,8 @@ import { Inbox, Home, Profile } from "./pages";
 import Layout from "./components/Layout";
 import { Posts, Saved, Tagged } from "./components";
 import RightDM from "./components/Sections/DMComps/OuterDM/RightDM";
-import InnerDmHeader from "./components/Sections/DMComps/InnerDM/InnerDmHeader";
+// import InnerDmHeader from "./components/Sections/DMComps/InnerDM/InnerDmHeader";
+import InnerDmCombine from "./components/Sections/DMComps/InnerDM/InnerDmCombine";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
             {/* Default route - shows the empty state */}
             <Route index element={<RightDM />} />
             {/* Route for individual messages */}
-            <Route path=":id" element={<InnerDmHeader />} />
+            <Route path=":id" element={<InnerDmCombine />} />
           </Route>
 
           <Route path="/profile" element={<Profile />}>

@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function MainDm() {
-  return (
-    <div>MainDm</div>
-  )
+  return <div className="ml-[27.5%]">MainDm</div>;
 }
 
-export default MainDm
+export default MainDm;
