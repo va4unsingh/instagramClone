@@ -16,7 +16,7 @@ function App() {
             {/* Default route - shows the empty state */}
             <Route index element={<RightDM />} />
             {/* Route for individual messages */}
-            <Route path="vader" element={<InnerDmHeader />} />
+            <Route path=":id" element={<InnerDmHeader />} />
           </Route>
 
           <Route path="/profile" element={<Profile />}>
