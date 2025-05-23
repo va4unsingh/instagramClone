@@ -17,7 +17,7 @@ function ProfileFooter() {
     "Meta Verified",
   ];
   return (
-    <div className="mt-15">
+    <div className="mt-15 pb-13">
       <ul className="flex flex-wrap justify-center text-xs text-gray-400 gap-x-4 gap-y-1 mt-6">
         {footerLinks.map((link, index) => (
           <li key={index}>

@@ -12,8 +12,8 @@ function Saved() {
           + New Collection
         </button>
       </div>
-      <div className="grid grid-cols-2 w-fit mt-3">
-        <img
+      <div className="grid grid-cols-2 w-fit mt-3 cursor-pointer">
+        {/* <img
           src={Card}
           className="w-[130px] h-[130px] object-cover border border-white/20 rounded-tl-xs"
           alt=""
@@ -22,36 +22,46 @@ function Saved() {
           src={Card}
           className="w-[130px] h-[130px] object-cover border border-white/20 rounded-tr-sm"
           alt=""
-        />
+        /> */}
 
         {/* Bottom row with shared hover effect */}
         <div className="group cursor-pointer col-span-2 grid grid-cols-2">
+          <div className="relative">
+            <img
+              src={Card}
+              className="w-[130px] h-[130px] object-cover border border-white/20 rounded-tl-xs transition-all duration-100 brightness-95 group-hover:brightness-110"
+              alt=""
+            />
+          </div>
+          <div className="relative">
+            <img
+              src={Card}
+              className="w-[130px] h-[130px] object-cover border border-white/20 rounded-tr-sm transition-all duration-100 brightness-95 group-hover:brightness-110"
+              alt=""
+            />
+          </div>
+
           {/* Bottom left with text */}
           <div className="relative">
             <img
               src={Card}
-              className="w-[130px] h-[130px] object-cover border border-white/20 rounded-bl-sm transition-all duration-300 group-hover:brightness-75"
+              className="w-[130px] h-[130px] object-cover border border-white/20 rounded-bl-sm transition-all duration-100 brightness-90 group-hover:brightness-120"
               alt=""
             />
             {/* Text at bottom left corner */}
             <div className="absolute bottom-2 left-2">
-              <span className="text-white text-sm font-semibold bg-black/70 px-2 py-1 rounded">
-                Your Text
+              <span className="text-white/60 group-hover:text-white text-md font-semibold px-2 py-1 rounded">
+                All Post
               </span>
             </div>
-            {/* Hover overlay */}
-            <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-bl-sm"></div>
           </div>
-
           {/* Bottom right */}
           <div className="relative">
             <img
               src={Card}
-              className="w-[130px] h-[130px] object-cover border border-white/20 rounded-br-sm transition-all duration-300 group-hover:brightness-75"
+              className="w-[130px] h-[130px] object-cover border border-white/20 rounded-br-sm transition-all duration-100 brightness-90 group-hover:brightness-120"
               alt=""
             />
-            {/* Hover overlay */}
-            <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-br-sm"></div>
           </div>
         </div>
       </div>
