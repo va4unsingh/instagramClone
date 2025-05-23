@@ -21,6 +21,7 @@ import GearIcon from "./GearIcon.svg";
 import PlusStory from "./PlusStory.svg";
 import tableCell from "./tableCell.svg";
 import userTag from "./userTag.svg";
+import cameraIcon from "./cameraIcon.svg";
 
 export {
   InstaLogo,
@@ -46,4 +47,5 @@ export {
   PlusStory,
   tableCell,
   userTag,
+  cameraIcon,
 };
