@@ -23,6 +23,7 @@ import tableCell from "./tableCell.svg";
 import userTag from "./userTag.svg";
 import cameraIcon from "./cameraIcon.svg";
 import PenNotebook from "./PenNotebook.svg";
+import MsgOuter from "./MsgOuter.svg";
 
 export {
   InstaLogo,
@@ -50,4 +51,5 @@ export {
   userTag,
   cameraIcon,
   PenNotebook,
+  MsgOuter,
 };

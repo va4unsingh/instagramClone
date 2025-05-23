@@ -34,7 +34,7 @@ function LeftSide() {
   ];
 
   const location = useLocation();
-  const isInbox = location.pathname === "/inbox";
+  const isInbox = location.pathname === "/inbox" || location.pathname.includes("/inbox/");
 
   return (
     <div className="fixed">

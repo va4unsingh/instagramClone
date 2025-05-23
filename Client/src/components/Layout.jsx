@@ -5,7 +5,8 @@ import React from "react";
 
 function Layout() {
   const location = useLocation();
-  const isInbox = location.pathname === "/inbox";
+  const isInbox =
+    location.pathname === "/inbox" || location.pathname.includes("/inbox/");
   return (
     <div className="flex min-h-screen bg-black text-white gap-2">
       <div
