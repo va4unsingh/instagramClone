@@ -26,6 +26,7 @@ import PenNotebook from "./PenNotebook.svg";
 import MsgOuter from "./MsgOuter.svg";
 import blueTick from "./blueTick.svg";
 import infoI from "./infoI.svg";
+import PostFileUpload from "./PostFileUpload.svg";
 
 export {
   InstaLogo,
@@ -56,4 +57,5 @@ export {
   MsgOuter,
   blueTick,
   infoI,
+  PostFileUpload
 };
