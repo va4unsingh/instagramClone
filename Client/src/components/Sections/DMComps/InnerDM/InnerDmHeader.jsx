@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { blueTick, infoI, Profile } from "../../../../assets";
 
+
 function InnerDmHeader() {
   return (
     <div className="ml-[27.5%] border-b border-white/15 ">
