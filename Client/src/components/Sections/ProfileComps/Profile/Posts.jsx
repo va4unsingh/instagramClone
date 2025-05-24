@@ -1,5 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { cameraIcon, PostFileUpload, Profile } from "../../../../assets";
+import "./scrollBar.css";
+import EmojiPicker from "emoji-picker-react";
+import { EmojiIcon } from "../../../../assets";
 
 function Posts() {
   const [showFile, setShowFile] = useState(false);
@@ -7,6 +10,30 @@ function Posts() {
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [tempPreviewImage, setTempPreviewImage] = useState(null);
+
+  const [message, setMessage] = useState("");
+  const [showPicker, setShowPicker] = useState(false);
+  const emojiRef = useRef(null);
+
+  const handleEmojiClick = (emojiData) => {
+    setMessage((prev) => prev + emojiData.emoji);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (emojiRef.current && !emojiRef.current.contains(event.target)) {
+        setShowPicker(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const [text, setText] = useState("");
+
+  const charCount = text.length;
 
   const handleClick = () => {
     fileInputRef.current.click();
@@ -19,6 +46,10 @@ function Posts() {
 
   const closePopup = () => {
     setShowFile(false);
+    setTempPreviewImage(null); // Clear temporary preview
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Reset file input
+    }
     document.body.style.overflowY = "unset";
   };
 
@@ -41,7 +72,11 @@ function Posts() {
   };
 
   const handleShare = () => {
-    setPreviewImage(tempPreviewImage); // Move temp image to main preview
+    setPreviewImage(tempPreviewImage); // Move temp image to main
+    setTempPreviewImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""; // Reset file input
+    }
     setShowFile(false); // Close popup
     document.body.style.overflowY = "unset";
   };
@@ -143,8 +178,52 @@ function Posts() {
                 </div>
                 <div className="w-[40%] h-full bg-[#262626] p-4 text-white">
                   <div className="flex items-center gap-2">
-                    <img src={Profile} className="rounded-full w-[30px]" />
-                    <div>vadergotbaddies</div>
+                    <img src={Profile} className="rounded-full w-[25px]" />
+                    <div className="text-sm font-semibold">vadergotbaddies</div>
+                  </div>
+
+                  <div className="mt-4">
+                    <textarea
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                      placeholder="Write a caption..."
+                      className="resize-none border-none outline-none w-full h-48 custom-scrollbar pr-4 "
+                      // className="w-full h-32 bg-transparent border-none outline-none resize-none text-white placeholder-gray-400"
+                    />
+                  </div>
+
+                  <div
+                    ref={emojiRef}
+                    className="flex items-center justify-between"
+                  >
+                    <button
+                      className="text-lg cursor-pointer opacity-60 ml-1"
+                      type="button"
+                      onClick={() => setShowPicker((prev) => !prev)}
+                    >
+                      <img src={EmojiIcon} width="18px" alt="emoji" />
+                    </button>
+
+                    <div className="text-xs text-gray-500 ">
+                      {charCount} character{charCount !== 1 ? "s" : ""}
+                    </div>
+
+                    {showPicker && (
+                      <div className="absolute bottom-8 mb-2 left-0 z-50">
+                        <EmojiPicker
+                          onEmojiClick={handleEmojiClick}
+                          theme="dark"
+                          emojiStyle="apple"
+                          width={300}
+                          height={350}
+                          searchDisabled={false}
+                          skinTonesDisabled={false}
+                          lazyLoadEmojis={true}
+                          autoFocusSearch={false}
+                          previewConfig={{ showPreview: false }}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
