@@ -12,9 +12,10 @@ function Posts() {
 
   // const [showFile, setShowFile] = useState(false);
   const fileInputRef = useRef(null);
-  const [previewImage, setPreviewImage] = useState(null);
+  const [previewImages, setPreviewImages] = useState([]);
 
-  const [tempPreviewImage, setTempPreviewImage] = useState(null);
+  const [tempPreviewImages, setTempPreviewImages] = useState([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const [showPicker, setShowPicker] = useState(false);
   const textareaRef = useRef(null);
@@ -77,7 +78,8 @@ function Posts() {
 
   const closePopup = () => {
     dispatch(closeModal());
-    setTempPreviewImage(null); // Clear temporary preview
+    setTempPreviewImages([]); // Clear temporary preview
+    setCurrentImageIndex(0); // clear index of preview image
     setText(""); // Clear text when closing popup
     setShowPicker(false); // Close emoji picker
     if (fileInputRef.current) {
@@ -97,20 +99,35 @@ function Posts() {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setTempPreviewImage(reader.result); // Store in temp state
-      };
-      reader.readAsDataURL(file);
+    const files = Array.from(e.target.files || []);
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+
+    if (imageFiles.length > 0) {
+      const readers = imageFiles.map((file) => {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(file);
+        });
+      });
+      Promise.all(readers).then((results) => {
+        setTempPreviewImages((prev) => [...prev, ...results]);
+      });
     }
+    // if (file && file.type.startsWith("image/")) {
+    //   const reader = new FileReader();
+    //   reader.onloadend = () => {
+    //     setTempPreviewImage(reader.result); // Store in temp state
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
 
   const handleShare = () => {
-    if (tempPreviewImage) {
-      setPreviewImage(tempPreviewImage); // Move temp image to main
-      setTempPreviewImage(null);
+    if (tempPreviewImages.length > 0) {
+      setPreviewImages((prev) => [...prev, ...tempPreviewImages]); // Move temp image to main
+      setTempPreviewImages([]);
+      setCurrentImageIndex(0); // clear index after sharing
       setText(""); // Clear text after sharing
       setShowPicker(false); // Close emoji picker
     }
@@ -121,13 +138,39 @@ function Posts() {
     // document.body.style.overflowY = "unset";
   };
 
-  const handleRemovePreview = () => {
-    setPreviewImage(null);
+  const handleRemovePreview = (indexToRemove) => {
+    setPreviewImages((prev) =>
+      prev.filter((_, index) => index !== indexToRemove)
+    );
+  };
+
+  const handleRemoveTempImage = (indexToRemove) => {
+    setTempPreviewImages((prev) => {
+      const newImages = prev.filter((_, index) => index !== indexToRemove);
+      if (currentImageIndex >= newImages.length && newImages.length > 0) {
+        setCurrentImageIndex(newImages.length - 1);
+      } else if (newImages.length === 0) {
+        setCurrentImageIndex(0);
+      }
+      return newImages;
+    });
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) =>
+      prev < tempPreviewImages.length - 1 ? prev + 1 : 0
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) =>
+      prev > 0 ? prev - 1 : tempPreviewImages.length - 1
+    );
   };
 
   return (
     <div className="mt-15">
-      {!previewImage ? (
+      {previewImages.length === 0 ? (
         <>
           <div className="flex justify-center">
             <div className="cursor-pointer h-[60px] w-[60px] border-2 rounded-full items-center justify-center flex">
@@ -149,18 +192,30 @@ function Posts() {
           </div>
         </>
       ) : (
-        <div className="flex items-center justify-center">
-          <div
-            onClick={handleRemovePreview}
-            className="text-white cursor-pointer"
-          >
-            Cross
+        <div className="px-36 -mt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+            {previewImages.map((image, index) => (
+              <div
+                key={index}
+                className="relative w-full h-[400px] overflow-hidden  bg-black"
+              >
+                <img
+                  src={image}
+                  alt={`Preview ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-2 left-2 text-sm text-white bg-black/60 px-2 py-1 rounded">
+                  Post {index + 1}
+                </div>
+                <button
+                  onClick={() => handleRemovePreview(index)}
+                  className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 text-xs"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
           </div>
-          <img
-            src={previewImage}
-            alt="Preview"
-            className="max-w-full max-h-[400px] object-contain"
-          />
         </div>
       )}
 
@@ -170,6 +225,8 @@ function Posts() {
         ref={fileInputRef}
         className="hidden"
         onChange={handleFileChange}
+        multiple
+        accept="image/*"
       />
 
       {/* Popup Modal */}
@@ -178,7 +235,7 @@ function Posts() {
           onClick={clickAnyWhereClose}
           className="bg-black/70 bg-opacity-70 inset-0 z-50 fixed flex items-center justify-center"
         >
-          {!tempPreviewImage ? (
+          {tempPreviewImages.length === 0 ? (
             <div className="relative rounded-lg h-[520px] w-[470px] bg-[#262626] flex flex-col overflow-hidden">
               <nav className="flex justify-center bg-black py-3 text-white font-semibold rounded-t-lg">
                 Create new post
@@ -215,7 +272,7 @@ function Posts() {
               <div className="flex flex-1 overflow-hidden border-t text-white/10 ">
                 <div className="w-[60%] h-full">
                   <img
-                    src={tempPreviewImage}
+                    src={tempPreviewImages}
                     alt="Preview"
                     className="w-full h-full object-cover border-r"
                   />
