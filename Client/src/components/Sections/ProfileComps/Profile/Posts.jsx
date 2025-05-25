@@ -211,6 +211,15 @@ function Posts() {
     );
   };
 
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [showPostPopup, setShowPostPopup] = useState(false);
+
+  const popUpforPost = (post) => {
+    setSelectedPost(post);
+    setShowPostPopup(true);
+    document.body.style.overflow = "hidden"; // optional: prevent scrolling
+  };
+
   return (
     <div className="mt-15">
       {userPosts.length === 0 ? (
@@ -243,7 +252,7 @@ function Posts() {
                 className="relative w-full h-[400px] overflow-hidden bg-black group"
               >
                 <button
-                  onClick={(e) => console.log("Post clicked:", post)}
+                  onClick={() => popUpforPost(post)}
                   className="h-[400px] relative"
                 >
                   <img
@@ -266,6 +275,65 @@ function Posts() {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {showPostPopup && selectedPost && (
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowPostPopup(false);
+              setSelectedPost(null);
+              document.body.style.overflow = "unset";
+            }
+          }}
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+        >
+          <div className="bg-white overflow-hidden max-w-4xl w-[80%] flex relative">
+            {/* Left: Image */}
+            <div className="w-[80%]">
+              <img
+                src={selectedPost.images?.[0] || selectedPost.image}
+                alt=""
+                className="object-cover w-full h-full"
+                style={{ maxHeight: "620px" }}
+              />
+            </div>
+
+            {/* Right: Info panel */}
+            <div className="w-[50%]  flex flex-col justify-start bg-black border-l border-white/15">
+              <div className="flex items-center border-b border-white/15 px-4 py-2 gap-2 ">
+                <img
+                  src={selectedPost.user?.profilePic}
+                  alt={selectedPost.user?.name}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+                <nav className="font-bold text-xs">
+                  {selectedPost.user?.name}
+                </nav>
+              </div>
+
+              {/* <div className="flex items-center justify-center mt-50">jsdfds</div> */}
+
+              <div className="mt-auto px-2 pb-5 pt-2 space-y-0.5 border-t border-white/15">
+                <div className="text-sm text-white">{selectedPost.caption}</div>
+                <div className="text-xs text-gray-600 ">
+                  {new Date(selectedPost.createdAt).toLocaleString()}
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Close button */}
+          <button
+            onClick={() => {
+              setShowPostPopup(false);
+              setSelectedPost(null);
+              document.body.style.overflow = "unset";
+            }}
+            className="absolute top-4 right-4 cursor-pointer bg-black text-white px-2 py-1 rounded-full text-xl"
+          >
+            ✕
+          </button>
         </div>
       )}
 

@@ -18,38 +18,38 @@ function Middle() {
   });
 
   // Static fallback posts (you can keep these or remove them)
-  const staticPosts = [
-    {
-      id: 1,
-      user: "va4unsingh",
-      profile: Profile,
-      image: Profile,
-      time: "1h",
-      likes: "143",
-      commentsCount: "12",
-    },
-    {
-      id: 2,
-      user: "positivitykaizen",
-      profile: Profile,
-      image: Profile,
-      time: "2d",
-      likes: "200",
-      commentsCount: "30",
-    },
-    {
-      id: 3,
-      user: "zenfocus",
-      profile: Profile,
-      image: Profile,
-      time: "3h",
-      likes: "321",
-      commentsCount: "18",
-    },
-  ];
+  // const staticPosts = [
+  //   {
+  //     id: 1,
+  //     user: "va4unsingh",
+  //     profile: Profile,
+  //     image: Profile,
+  //     time: "1h",
+  //     likes: "143",
+  //     commentsCount: "12",
+  //   },
+  //   {
+  //     id: 2,
+  //     user: "positivitykaizen",
+  //     profile: Profile,
+  //     image: Profile,
+  //     time: "2d",
+  //     likes: "200",
+  //     commentsCount: "30",
+  //   },
+  //   {
+  //     id: 3,
+  //     user: "zenfocus",
+  //     profile: Profile,
+  //     image: Profile,
+  //     time: "3h",
+  //     likes: "321",
+  //     commentsCount: "18",
+  //   },
+  // ];
 
   // Combine Redux posts with static posts (Redux posts first)
-  const allPosts = [...posts, ...staticPosts];
+  const allPosts = [...posts]; // ...staticPosts
 
   return (
     <div className="xl:px-20">
