@@ -3,7 +3,7 @@ import { cameraIcon, PostFileUpload, Profile } from "../../../../assets";
 import "./scrollBar.css";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiIcon } from "../../../../assets";
-import { openModal, closeModal } from "../../../../features/modals/modalSlice";
+import { closeModal, openModal } from "../../../../features/modals/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function Posts() {
@@ -65,8 +65,15 @@ function Posts() {
 
   const showFilePopUp = () => {
     dispatch(openModal());
-    document.body.style.overflowY = "hidden";
+    // document.body.style.overflowY = "hidden";
   };
+
+  useEffect(() => {
+    document.body.style.overflowY = showFile ? "hidden" : "unset";
+    return () => {
+      document.body.style.overflowY = "unset";
+    };
+  }, [showFile]);
 
   const closePopup = () => {
     dispatch(closeModal());
@@ -76,8 +83,12 @@ function Posts() {
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; // Reset file input
     }
-    document.body.style.overflowY = "unset";
+    // document.body.style.overflowY = "unset";
   };
+
+  //   useEffect(() => {
+  //   if (!showFile) setPreviewImage(null);
+  // }, [showFile]);
 
   const clickAnyWhereClose = (e) => {
     if (e.target === e.currentTarget) {
@@ -86,7 +97,7 @@ function Posts() {
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -97,15 +108,21 @@ function Posts() {
   };
 
   const handleShare = () => {
-    setPreviewImage(tempPreviewImage); // Move temp image to main
-    setTempPreviewImage(null);
-    setText(""); // Clear text after sharing
-    setShowPicker(false); // Close emoji picker
+    if (tempPreviewImage) {
+      setPreviewImage(tempPreviewImage); // Move temp image to main
+      setTempPreviewImage(null);
+      setText(""); // Clear text after sharing
+      setShowPicker(false); // Close emoji picker
+    }
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; // Reset file input
     }
     dispatch(closeModal()); // Close popup
-    document.body.style.overflowY = "unset";
+    // document.body.style.overflowY = "unset";
+  };
+
+  const handleRemovePreview = () => {
+    setPreviewImage(null);
   };
 
   return (
@@ -134,8 +151,8 @@ function Posts() {
       ) : (
         <div className="flex items-center justify-center">
           <div
-            onClick={(e) => setPreviewImage(null)}
-            className="text white cursor-pointer"
+            onClick={handleRemovePreview}
+            className="text-white cursor-pointer"
           >
             Cross
           </div>
