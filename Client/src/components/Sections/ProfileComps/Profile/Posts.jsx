@@ -5,14 +5,23 @@ import EmojiPicker from "emoji-picker-react";
 import { EmojiIcon } from "../../../../assets";
 import { closeModal, openModal } from "../../../../features/modals/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { addPost, deletePost } from "../../../../features/posts/postSlice";
 
 function Posts() {
   const dispatch = useDispatch();
   const showFile = useSelector((state) => state.modal.showFile);
 
+  // 🔥 Read posts from Redux store instead of local state
+  const reduxPosts = useSelector((state) => state.posts.data);
+  // Filter posts for current user (you can modify this logic based on your user system)
+  const userPosts = reduxPosts.filter(
+    (post) =>
+      post.user?.name === "vadergotbaddies" || post.user === "vadergotbaddies"
+  );
+
   // const [showFile, setShowFile] = useState(false);
   const fileInputRef = useRef(null);
-  const [previewImages, setPreviewImages] = useState([]);
+  // const [previewImages, setPreviewImages] = useState([]);
 
   const [tempPreviewImages, setTempPreviewImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -127,26 +136,52 @@ function Posts() {
     }
   };
 
+  // const handleShare = () => {
+  //   if (tempPreviewImages.length > 0) {
+  //     setPreviewImages((prev) => [...prev, ...tempPreviewImages]); // Move temp image to main
+  //     setTempPreviewImages([]);
+  //     setCurrentImageIndex(0); // clear index after sharing
+  //     setText(""); // Clear text after sharing
+  //     setShowPicker(false); // Close emoji picker
+  //   }
+  //   if (fileInputRef.current) {
+  //     fileInputRef.current.value = ""; // Reset file input
+  //   }
+  //   dispatch(closeModal()); // Close popup
+  //   // document.body.style.overflowY = "unset";
+  // };
+
   const handleShare = () => {
     if (tempPreviewImages.length > 0) {
-      setPreviewImages((prev) => [...prev, ...tempPreviewImages]); // Move temp image to main
+      const newPost = {
+        id: Date.now(), // unique ID
+        images: tempPreviewImages,
+        caption: text,
+        user: {
+          name: "vadergotbaddies",
+          profilePic: Profile,
+        },
+        createdAt: new Date().toISOString(),
+      };
+
+      dispatch(addPost(newPost)); // Add to Redux store
+
+      // Clear temporary states
+      // setPreviewImages((prev) => [...prev, ...tempPreviewImages]);
       setTempPreviewImages([]);
-      setCurrentImageIndex(0); // clear index after sharing
-      setText(""); // Clear text after sharing
-      setShowPicker(false); // Close emoji picker
+      setCurrentImageIndex(0);
+      setText("");
+      setShowPicker(false);
+      fileInputRef.current.value = "";
+      dispatch(closeModal());
     }
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Reset file input
-    }
-    dispatch(closeModal()); // Close popup
-    // document.body.style.overflowY = "unset";
   };
 
-  const handleRemovePreview = (indexToRemove) => {
-    setPreviewImages((prev) =>
-      prev.filter((_, index) => index !== indexToRemove)
-    );
-  };
+  // const handleRemovePreview = (indexToRemove) => {
+  //   setPreviewImages((prev) =>
+  //     prev.filter((_, index) => index !== indexToRemove)
+  //   );
+  // };
 
   const handleRemoveTempImage = (indexToRemove) => {
     setTempPreviewImages((prev) => {
@@ -174,7 +209,7 @@ function Posts() {
 
   return (
     <div className="mt-15">
-      {previewImages.length === 0 ? (
+      {userPosts.length === 0 ? (
         <>
           <div className="flex justify-center">
             <div className="cursor-pointer h-[60px] w-[60px] border-2 rounded-full items-center justify-center flex">
@@ -198,18 +233,18 @@ function Posts() {
       ) : (
         <div className="px-36 -mt-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-            {previewImages.map((image, index) => (
+            {userPosts.map((post, index) => (
               <div
-                key={index}
+                key={post.id}
                 className="relative w-full h-[400px] overflow-hidden bg-black group"
               >
                 <button
-                  onClick={(e) => console.log("vasdf")}
+                  onClick={(e) => console.log("Post clicked:", post)}
                   className="h-[400px] relative"
                 >
                   <img
-                    src={image}
-                    alt={`Preview ${index + 1}`}
+                    src={post.images?.[0] || post.image}
+                    alt={`Post ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
                   {/* Overlay that appears on hover */}
@@ -219,7 +254,7 @@ function Posts() {
                   Post {index + 1}
                 </div>
                 <button
-                  onClick={() => handleRemovePreview(index)}
+                  onClick={() => dispatch(deletePost(post.id))}
                   className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 text-xs z-10"
                 >
                   Remove
@@ -406,7 +441,7 @@ function Posts() {
                       <div className="text-xs text-gray-400 mb-2">
                         Images ({tempPreviewImages.length})
                       </div>
-                      <div className="flex space-x-2 overflow-x-auto pb-2">
+                      <div className="flex space-x-2 overflow-x-auto pb-2 custom-scrollbar">
                         {tempPreviewImages.map((image, index) => (
                           <div
                             key={index}
@@ -420,7 +455,7 @@ function Posts() {
                             <img
                               src={image}
                               alt={`Thumbnail ${index + 1}`}
-                              className="w-full h-full object-cover rounded"
+                              className="w-full h-full object-cover rounded "
                             />
                           </div>
                         ))}
