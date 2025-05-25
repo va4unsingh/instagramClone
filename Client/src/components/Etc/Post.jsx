@@ -11,6 +11,7 @@ import {
   Bookmark,
   EmojiIcon,
 } from "../../assets";
+import { NavLink } from "react-router-dom";
 
 function Post({ user }) {
   // Create an array with 8 items (or more if you want)
@@ -42,14 +43,19 @@ function Post({ user }) {
     <div className="mt-5 xl:px-18 text-lg xl:text-xs">
       <div className="flex justify-between items-center px-3">
         <div className="flex items-center gap-2 ">
-          <img
-            src={Profile}
-            className="w-[45px] cursor-pointer rounded-full border-2 border-amber-600"
-            alt="Profile"
-          />
-          <span className="cursor-pointer hover:opacity-80 transition-opacity duration-20">
+          <NavLink to="/profile">
+            <img
+              src={Profile}
+              className="w-[45px] cursor-pointer rounded-full border-2 border-amber-600"
+              alt="Profile"
+            />
+          </NavLink>
+          <NavLink
+            to="/profile"
+            className="cursor-pointer hover:opacity-80 transition-opacity duration-20"
+          >
             positivitykaizen
-          </span>
+          </NavLink>
           <span className="text-white/60 cursor-pointer hover:opacity-80 transition-opacity duration-20">
             • 1d
           </span>

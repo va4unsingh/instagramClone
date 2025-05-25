@@ -1,5 +1,6 @@
 import React from "react";
 import { Profile } from "../../../../assets";
+import { NavLink } from "react-router-dom";
 
 function RightSide() {
   const footLinks = [
@@ -17,13 +18,17 @@ function RightSide() {
   return (
     <div>
       <div className="mt-8 flex items-center gap-3 text-xs">
-        <img
-          src={Profile}
-          className="rounded-full cursor-pointer"
-          width="38px"
-          alt="Profile"
-        />
-        <span className="cursor-pointer">vadergotbaddies</span>
+        <NavLink to="/profile">
+          <img
+            src={Profile}
+            className="rounded-full cursor-pointer"
+            width="38px"
+            alt="Profile"
+          />
+        </NavLink>
+        <NavLink to="/profile" className="cursor-pointer">
+          vadergotbaddies
+        </NavLink>
         <span className="ml-14 text-sky-500 cursor-pointer hover:text-blue-200 transition-colors duration-20">
           Switch
         </span>
