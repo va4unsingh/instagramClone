@@ -3,9 +3,14 @@ import { cameraIcon, PostFileUpload, Profile } from "../../../../assets";
 import "./scrollBar.css";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiIcon } from "../../../../assets";
+import { openModal, closeModal } from "../../../../features/modals/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function Posts() {
-  const [showFile, setShowFile] = useState(false);
+  const dispatch = useDispatch();
+  const showFile = useSelector((state) => state.modal.showFile);
+
+  // const [showFile, setShowFile] = useState(false);
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -59,12 +64,12 @@ function Posts() {
   };
 
   const showFilePopUp = () => {
-    setShowFile(true);
+    dispatch(openModal());
     document.body.style.overflowY = "hidden";
   };
 
   const closePopup = () => {
-    setShowFile(false);
+    dispatch(closeModal());
     setTempPreviewImage(null); // Clear temporary preview
     setText(""); // Clear text when closing popup
     setShowPicker(false); // Close emoji picker
@@ -99,7 +104,7 @@ function Posts() {
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; // Reset file input
     }
-    setShowFile(false); // Close popup
+    dispatch(closeModal()); // Close popup
     document.body.style.overflowY = "unset";
   };
 

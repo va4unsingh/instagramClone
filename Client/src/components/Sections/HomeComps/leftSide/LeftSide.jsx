@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   HomeLogo,
   InstaLogo,
@@ -17,8 +16,16 @@ import {
   InstaLogoSmall,
 } from "../../../../assets";
 import { useLocation, NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../../../features/modals/modalSlice";
 
 function LeftSide() {
+  const dispatch = useDispatch();
+
+  const handleCreateClick = () => {
+    dispatch(openModal());
+  };
+
   const menuItems = [
     { label: "Home", icon: HomeLogo, path: "/" },
     { label: "Search", icon: SearchLogo },
@@ -34,7 +41,8 @@ function LeftSide() {
   ];
 
   const location = useLocation();
-  const isInbox = location.pathname === "/inbox" || location.pathname.includes("/inbox/");
+  const isInbox =
+    location.pathname === "/inbox" || location.pathname.includes("/inbox/");
 
   return (
     <div className="fixed">
@@ -89,6 +97,7 @@ function LeftSide() {
                 isInbox ? "px-3 pr-4 py-3" : "pr-17 pl-3 py-2.5"
               } cursor-pointer hover:bg-gray-500/15`}
               key={index}
+              onClick={item.label === "Create" ? handleCreateClick : undefined}
             >
               <img
                 src={item.icon}
@@ -101,6 +110,59 @@ function LeftSide() {
           );
         })}
       </ul>
+      {/* <ul className={`mt-6 space-y-2 pl-3`}>
+        <li className="flex gap-x-3 items-center rounded-lg  pr-17 pl-3 py-2.5 cursor-pointer hover:bg-gray-500/15">
+          <img src={HomeLogo} width="20px" />
+          Home
+        </li>
+        <li className="flex gap-x-3 items-center rounded-lg  pr-17 pl-3 py-2.5 cursor-pointer hover:bg-gray-500/15">
+          <img src={SearchLogo} width="20px" />
+          Search
+        </li>
+        <li className="flex gap-x-3 items-center rounded-lg  pr-17 pl-3 py-2.5 cursor-pointer hover:bg-gray-500/15">
+          <img src={Explore} width="20px" />
+          Explore
+        </li>
+        <li className="flex gap-x-3 items-center rounded-lg  pr-17 pl-3 py-2.5 cursor-pointer hover:bg-gray-500/15">
+          <img src={Reels} width="20px" />
+          Reels
+        </li>
+        <NavLink
+          to="/inbox"
+           className={({ isActive }) =>
+                    `flex gap-x-3 items-center rounded-lg cursor-pointer hover:bg-gray-500/15 ${
+                      isInbox ? "px-3 pr-4 py-3" : "pr-17 pl-3 py-2.5"
+                    } ${isActive ? "bg-gray-500/20 font-semibold" : ""}`
+                  }
+        >
+          <img src={Messages} width="20px" />
+          Messages
+        </NavLink>
+        <li className="flex gap-x-3 items-center rounded-lg  pr-17 pl-3 py-2.5 cursor-pointer hover:bg-gray-500/15">
+          <img src={Notifications} width="20px" />
+          Notifications
+        </li>
+        <li className="flex gap-x-3 items-center rounded-lg  pr-17 pl-3 py-2.5 cursor-pointer hover:bg-gray-500/15">
+          <img src={Create} width="20px" />
+          Create
+        </li>
+        <li className="flex gap-x-3 items-center rounded-lg  pr-17 pl-3 py-2.5 cursor-pointer hover:bg-gray-500/15">
+          <img src={Profile} className="rounded-full" width="20px" />
+          Profile
+        </li>
+        <li className="flex gap-x-3 items-center rounded-lg  pr-17 pl-3 py-2.5 cursor-pointer hover:bg-gray-500/15">
+          <img src={MetaAi} width="20px" />
+          Meta AI
+        </li>
+        <li className="flex gap-x-3 items-center rounded-lg  pr-17 pl-3 py-2.5 cursor-pointer hover:bg-gray-500/15">
+          <img src={AIStudio} width="20px" />
+          AI Studio
+        </li>
+        <li className="flex gap-x-3 items-center rounded-lg  pr-17 pl-3 py-2.5 cursor-pointer hover:bg-gray-500/15">
+          <img src={Threads} width="20px" />
+          Threads
+        </li>
+      </ul> */}
     </div>
   );
 }
