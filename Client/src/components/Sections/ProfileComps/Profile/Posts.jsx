@@ -8,15 +8,38 @@ function Posts() {
   const [showFile, setShowFile] = useState(false);
   const fileInputRef = useRef(null);
   const [previewImage, setPreviewImage] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
+
   const [tempPreviewImage, setTempPreviewImage] = useState(null);
 
-  const [message, setMessage] = useState("");
   const [showPicker, setShowPicker] = useState(false);
+  const textareaRef = useRef(null);
   const emojiRef = useRef(null);
 
+  const [text, setText] = useState("");
+  const charCount = text.length;
+
   const handleEmojiClick = (emojiData) => {
-    setMessage((prev) => prev + emojiData.emoji);
+    const emoji = emojiData.emoji;
+    const textarea = textareaRef.current;
+
+    if (textarea) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const currentText = textarea.value;
+
+      // Insert emoji at cursor position
+      const newText =
+        currentText.substring(0, start) + emoji + currentText.substring(end);
+
+      // Update the text state
+      setText(newText);
+
+      // Refocus textarea and set cursor position after emoji
+      setTimeout(() => {
+        textarea.focus();
+        textarea.setSelectionRange(start + emoji.length, start + emoji.length);
+      }, 0);
+    }
   };
 
   useEffect(() => {
@@ -31,10 +54,6 @@ function Posts() {
     };
   }, []);
 
-  const [text, setText] = useState("");
-
-  const charCount = text.length;
-
   const handleClick = () => {
     fileInputRef.current.click();
   };
@@ -47,6 +66,8 @@ function Posts() {
   const closePopup = () => {
     setShowFile(false);
     setTempPreviewImage(null); // Clear temporary preview
+    setText(""); // Clear text when closing popup
+    setShowPicker(false); // Close emoji picker
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; // Reset file input
     }
@@ -65,7 +86,6 @@ function Posts() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setTempPreviewImage(reader.result); // Store in temp state
-        setSelectedFile(file); // store actual file
       };
       reader.readAsDataURL(file);
     }
@@ -74,6 +94,8 @@ function Posts() {
   const handleShare = () => {
     setPreviewImage(tempPreviewImage); // Move temp image to main
     setTempPreviewImage(null);
+    setText(""); // Clear text after sharing
+    setShowPicker(false); // Close emoji picker
     if (fileInputRef.current) {
       fileInputRef.current.value = ""; // Reset file input
     }
@@ -168,7 +190,7 @@ function Posts() {
                   Share
                 </button>
               </nav>
-              <div className="flex flex-1 overflow-hidden border-t text-white/30 ">
+              <div className="flex flex-1 overflow-hidden border-t text-white/10 ">
                 <div className="w-[60%] h-full">
                   <img
                     src={tempPreviewImage}
@@ -184,6 +206,7 @@ function Posts() {
 
                   <div className="mt-4">
                     <textarea
+                      ref={textareaRef}
                       value={text}
                       onChange={(e) => setText(e.target.value)}
                       placeholder="Write a caption..."
@@ -209,17 +232,17 @@ function Posts() {
                     </div>
 
                     {showPicker && (
-                      <div className="absolute bottom-8 mb-2 left-0 z-50">
+                      <div className="absolute bottom-2 right-8 z-50 emoji-picker-no-header ">
                         <EmojiPicker
                           onEmojiClick={handleEmojiClick}
                           theme="dark"
                           emojiStyle="apple"
-                          width={300}
-                          height={350}
-                          searchDisabled={false}
+                          width={280}
+                          height={180}
+                          searchDisabled={true}
+                          autoFocusSearch={false}
                           skinTonesDisabled={false}
                           lazyLoadEmojis={true}
-                          autoFocusSearch={false}
                           previewConfig={{ showPreview: false }}
                         />
                       </div>
