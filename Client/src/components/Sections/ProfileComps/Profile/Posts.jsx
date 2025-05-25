@@ -153,18 +153,22 @@ function Posts() {
 
   const handleShare = () => {
     if (tempPreviewImages.length > 0) {
-      const newPost = {
-        id: Date.now(), // unique ID
-        images: tempPreviewImages,
-        caption: text,
-        user: {
-          name: "vadergotbaddies",
-          profilePic: Profile,
-        },
-        createdAt: new Date().toISOString(),
-      };
+      // Create separate posts for each image
+      tempPreviewImages.forEach((image, index) => {
+        const newPost = {
+          id: Date.now() + index, // Ensure unique IDs
+          images: [image], // Single image per post
+          image: image, // For backward compatibility
+          caption: text,
+          user: {
+            name: "vadergotbaddies",
+            profilePic: Profile,
+          },
+          createdAt: new Date().toISOString(),
+        };
 
-      dispatch(addPost(newPost)); // Add to Redux store
+        dispatch(addPost(newPost)); // Add each post to Redux store
+      });
 
       // Clear temporary states
       // setPreviewImages((prev) => [...prev, ...tempPreviewImages]);
